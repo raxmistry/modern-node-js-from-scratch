@@ -1,24 +1,23 @@
-const http = require('http')
-const fs = require('fs')
+const path = require('path')
+const express = require('express')
 
-const aboutPage = fs.readFile('about.html')
-const contactPage = fs.readFile('contact.html')
-const homePage = fs.readFile('index.html')
-
-const server = http.createServer((request, response) => {
-    console.log(request.url)
-
-    if (request.url === '/') {
-        response.end(homePage)
-    } else if (request.url === '/about') {
-        response.end(aboutPage)
-    } else if (request.url === '/contact') {
-        response.end(contactPage)
-    } else {
-        response.writeHead(404)
-        response.end("Page not found")
-    }
-    
+const app = new express()
+ 
+app.get('/', (request, response) => { 
+    response.sendFile(path.resolve(__dirname, 'index.html'))
 })
 
-server.listen(3000)
+
+app.get('/about', (request, response) => {
+    response.sendFile(path.resolve(__dirname, 'about.html'))
+})
+
+app.get('/contact', (request, response) => {
+    response.sendFile(path.resolve(__dirname, 'contact.html'))
+})
+
+app.listen(3000, () => {
+    console.log("Server started on port 3000")
+})
+
+
