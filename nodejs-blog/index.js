@@ -1,8 +1,11 @@
 const express = require('express')
 const path = require('path')
 const {config, engine} = require('express-edge')
+const mongoose = require('mongoose')
 
 const app = new express()
+
+mongoose.connect('mongodb://localhost/node-js-blog')
 
 config({ cache: process.env.NODE_ENV === 'production' });
 
