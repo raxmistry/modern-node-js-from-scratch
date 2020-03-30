@@ -21,6 +21,16 @@ app.set('views', `${__dirname}/views`);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
+const validateCreatePostMiddleware = (req, res, next) => {
+
+    if (req.files.image === null) {
+        return res.redirect('/posts/new')
+    }
+    next()
+}
+
+app.use('/posts/store', validateCreatePostMiddleware)
+
 app.get('/', async(req, res) => {
 
     const posts = await Post.find({})
