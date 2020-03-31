@@ -9,6 +9,8 @@ const app = new express()
 const createPostController = require('./controllers/createPost')
 const homePageController = require('./controllers/homePage')
 const storePostController = require('./controllers/storePost')
+const aboutPageController = require('./controllers/aboutPage')
+const singlePostController = require('./controllers/singlePost')
 
 mongoose.connect('mongodb://localhost/node-js-blog')
 
@@ -41,16 +43,9 @@ app.get('/posts/new', createPostController)
 
 app.post('/posts/store', storePostController)
 
-app.get('/about', (req, res) => {
-    res.render('about')
-})
+app.get('/about', aboutPageController)
 
-app.get('/post/:id', async(req, res) => {
-    const post = await Post.findById(req.params.id)
-    res.render('post', {
-        post
-    })
-})
+app.get('/post/:id', singlePostController)
 
 app.get('/contact', (req, res) => {
     res.render('contact')
