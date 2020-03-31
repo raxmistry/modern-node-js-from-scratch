@@ -6,6 +6,9 @@ const bodyParser = require('body-parser')
 const Post = require('./database/models/Post')
 const fileupload = require('express-fileupload')
 const app = new express()
+const createPostController = require('./controllers/createPost')
+const homePageController = require('./controllers/homePage')
+const storePostController = require('./controllers/storePost')
 
 mongoose.connect('mongodb://localhost/node-js-blog')
 
@@ -32,30 +35,11 @@ const validateCreatePostMiddleware = (req, res, next) => {
 
 app.use('/posts/store', validateCreatePostMiddleware)
 
-app.get('/', async(req, res) => {
+app.get('/', homePageController)
 
-    const posts = await Post.find({})
-    console.log(posts)
-    res.render('index', {
-        posts
-    })
-})
+app.get('/posts/new', createPostController)
 
-app.get('/posts/new', (req, res) => {
-    res.render('create')
-})
-
-app.post('/posts/store', (req, res) => {
-    const { image } = req.files
-    image.mv(path.resolve(__dirname, 'public/posts/', image.name), (error) => {
-        Post.create({ 
-            ...req.body, 
-            image: `/posts/${image.name}`
-        } , (error, post) => {
-            res.redirect('/')
-        })
-    })
-})
+app.post('/posts/store', storePostController)
 
 app.get('/about', (req, res) => {
     res.render('about')
