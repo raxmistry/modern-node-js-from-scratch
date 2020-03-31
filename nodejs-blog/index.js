@@ -13,6 +13,9 @@ const aboutPageController = require('./controllers/aboutPage')
 const singlePostController = require('./controllers/singlePost')
 const createUserController = require('./controllers/createUser')
 const storeUserController = require('./controllers/storeUser')
+const loginController = require('./controllers/login')
+const loginUserController = require('./controllers/loginUser')
+
 
 mongoose.connect('mongodb://localhost/node-js-blog')
 
@@ -36,7 +39,11 @@ app.get('/', homePageController)
 
 app.get('/auth/register', createUserController)
 
+app.get('/auth/login', loginController)
+
 app.post('/users/register', storeUserController)
+
+app.post('/users/login', loginUserController)
 
 app.get('/posts/new', createPostController)
 
