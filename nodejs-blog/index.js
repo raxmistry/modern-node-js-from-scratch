@@ -6,6 +6,9 @@ const bodyParser = require('body-parser')
 const Post = require('./database/models/Post')
 const fileupload = require('express-fileupload')
 const app = new express()
+const expressSession = require('express-session')
+const connectMongo = require('connect-mongo')
+
 const createPostController = require('./controllers/createPost')
 const homePageController = require('./controllers/homePage')
 const storePostController = require('./controllers/storePost')
@@ -15,10 +18,14 @@ const createUserController = require('./controllers/createUser')
 const storeUserController = require('./controllers/storeUser')
 const loginController = require('./controllers/login')
 const loginUserController = require('./controllers/loginUser')
-const expressSession = require('express-session')
+
+const mongoStore = connectMongo(expressSession)
 
 app.use(expressSession({ 
-    secret: 'secret'
+    secret: 'secret',
+    store: new mongoStore({
+        mongooseConnection : mongoose.connection
+    })
  }))
 
 mongoose.connect('mongodb://localhost/node-js-blog')
@@ -36,8 +43,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 const storePostMiddleware = require('./middleware/storePost')
+const auth = require('./middleware/auth')
 
-app.use('/posts/store', storePostMiddleware)
 
 app.get('/', homePageController)
 
@@ -49,9 +56,9 @@ app.post('/users/register', storeUserController)
 
 app.post('/users/login', loginUserController)
 
-app.get('/posts/new', createPostController)
+app.get('/posts/new', auth, createPostController)
 
-app.post('/posts/store', storePostController)
+app.post('/posts/store', auth, storePostMiddleware, storePostController)
 
 app.get('/about', aboutPageController)
 
