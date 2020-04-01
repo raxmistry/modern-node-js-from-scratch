@@ -21,10 +21,6 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <form action="/posts/store" method="POST" encType="multipart/form-data">  
-                    <div class="form-group floating-label-form-group controls">
-                        <label>iUsername</label>
-                        <input type="text" placeholder="username" name="username" clas="form-control">
-                    </div>
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label>Title</label>
@@ -40,7 +36,7 @@
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label>Content</label>
-                        <textarea placeholder="content ..." name="content" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea id="content" placeholder="content ..." name="content" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-grop mt-5"> 
@@ -53,4 +49,15 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('styles')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.js"></script>
+<script>
+    $('#content').summernote()
+</script>
 @endsection
