@@ -15,7 +15,11 @@ const createUserController = require('./controllers/createUser')
 const storeUserController = require('./controllers/storeUser')
 const loginController = require('./controllers/login')
 const loginUserController = require('./controllers/loginUser')
+const expressSession = require('express-session')
 
+app.use(expressSession({ 
+    secret: 'secret'
+ }))
 
 mongoose.connect('mongodb://localhost/node-js-blog')
 
