@@ -30,12 +30,12 @@
  user           <form action="/users/register" method="POST" encType="multipart/form-data">  
                     <div class="form-group floating-label-form-group controls">
                         <label>iUsername</label>
-                        <input type="text" placeholder="username" name="username" clas="form-control">
+                        <input type="text" placeholder="username" value="{{ data.username | '' }}" name="username" clas="form-control">
                     </div>
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label>Email</label>
-                        <input type="email" placeholder="email" name="email" clas="form-control">
+                        <input type="email" placeholder="email" value="{{ data.email | '' }}" name="email" clas="form-control">
                     </div>
                 </div>
                 <div class="control-group">
