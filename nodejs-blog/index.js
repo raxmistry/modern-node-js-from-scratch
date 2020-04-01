@@ -63,7 +63,7 @@ app.get('/auth/register', redirectIfAuthenticated, createUserController)
 
 app.get('/auth/login', redirectIfAuthenticated, loginController)
 
-app.get('/auth/logout', redirectIfAuthenticated, logoutController)
+app.get('/auth/logout', auth, logoutController)
 
 app.post('/users/register', redirectIfAuthenticated, storeUserController)
 
