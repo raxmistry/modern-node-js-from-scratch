@@ -8,6 +8,7 @@ const fileupload = require('express-fileupload')
 const app = new express()
 const expressSession = require('express-session')
 const connectMongo = require('connect-mongo')
+const connectFlash = require('connect-flash')
 
 const createPostController = require('./controllers/createPost')
 const homePageController = require('./controllers/homePage')
@@ -29,6 +30,8 @@ app.use(expressSession({
  }))
 
 mongoose.connect('mongodb://localhost/node-js-blog')
+
+app.use(connectFlash())
 
 app.use(fileupload())
 
